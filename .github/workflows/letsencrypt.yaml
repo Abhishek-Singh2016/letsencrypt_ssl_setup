@@ -44,8 +44,8 @@ jobs:
         run: |
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
-          helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true \
-          --set "extraArgs={--dns01-recursive-nameservers-only=true,--dns01-recursive-nameservers=1.1.1.1:53\,8.8.8.8:53}"
+          #helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true \
+          #--set "extraArgs={--dns01-recursive-nameservers-only=true,--dns01-recursive-nameservers=1.1.1.1:53\,8.8.8.8:53}"
 
 
       - name: install duckdns webhook
@@ -61,5 +61,5 @@ jobs:
           #--set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
           #--set clusterIssuer.email='abhisheksingh050593@gmail.com' \
           #--set clusterIssuer.production.create=true
-          kubectl delete -f cert.yaml
+          kubectl apply -f cert.yaml
           kubectl delete -f cert2.yaml
