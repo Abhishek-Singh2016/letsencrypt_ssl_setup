@@ -8,5 +8,5 @@ spec:
   dnsNames:
   - test.abhi-ckad.duckdns.org
   issuerRef:
-    name: cert-manager-webhook-duckdns-production
+    name: duckdns-letsencrypt-prod
     kind: ClusterIssuer
