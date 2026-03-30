@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: test-duckdns-cert
+  name: python-duckdns-cert
   namespace: cert-manager
 spec:
-  secretName: test-duckdns-tls
+  secretName: python-duckdns-tls
   dnsNames:
   - python.abhi-ckad.duckdns.org
   issuerRef:
