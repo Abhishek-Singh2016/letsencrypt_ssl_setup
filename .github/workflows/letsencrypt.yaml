@@ -55,7 +55,7 @@ jobs:
           helm repo add csp33 https://csp33.github.io/cert-manager-duckdns-webhook
           helm repo update
           helm repo update
-          helm install cert-manager-duckdns-webhook csp33/cert-manager-duckdns-webhook `
-          --namespace cert-manager `
-          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' `
-          --set clusterIssuer.email='abhisheksingh050593@gmail.com' `  
+          helm install cert-manager-duckdns-webhook csp33/cert-manager-duckdns-webhook \
+          --namespace cert-manager \
+          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
+          --set clusterIssuer.email='abhisheksingh050593@gmail.com' \ 
