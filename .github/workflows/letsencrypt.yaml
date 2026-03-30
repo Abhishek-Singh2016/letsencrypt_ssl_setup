@@ -56,11 +56,13 @@ jobs:
           helm repo add csp33 https://csp33.github.io/cert-manager-duckdns-webhook
           helm repo update
           helm repo update
-          #helm upgrade --install cert-manager-duckdns-webhook csp33/cert-manager-duckdns-webhook \
-          #--namespace cert-manager \
-          #--set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
-          #--set clusterIssuer.email='abhisheksingh050593@gmail.com' \
-          #--set clusterIssuer.production.create=true
+          helm upgrade --install cert-manager-duckdns-webhook csp33/cert-manager-duckdns-webhook \
+          --namespace cert-manager \
+          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
+          --set clusterIssuer.email='abhisheksingh050593@gmail.com' \
+          --set clusterIssuer.production.create=true \
+          --set groupName='acme.webhook.duckdns.org' \
+          --set "extraArgs={--dns01-recursive-nameservers-only=true,--dns01-recursive-nameservers=1.1.1.1:53\,8.8.8.8:53}"
           kubectl apply -f clusterrole_serviceaccount.yaml
-          kubectl apply -f cert.yaml
-          kubectl delete -f cert2.yaml
+          kubectl delete -f cert.yaml
+          kubectl apply -f cert2.yaml
