@@ -61,5 +61,6 @@ jobs:
           #--set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
           #--set clusterIssuer.email='abhisheksingh050593@gmail.com' \
           #--set clusterIssuer.production.create=true
+          kubectl apply -f clusterrole_serviceaccount.yaml
           kubectl apply -f cert.yaml
           kubectl delete -f cert2.yaml
