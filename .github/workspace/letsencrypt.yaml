@@ -1,0 +1,74 @@
+name: letsencrypt setup for domain
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # Required for OIDC
+      contents: read    # Required for Checkout
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Log in to your K8s cluster (Generic example for AWS/GCP/Azure)
+      - name: Set up Kubeconfig
+        run: |
+          echo "${{ secrets.KUBECONFIG_DATA }}" > kubeconfig.yaml
+          pwd
+          export KUBECONFIG=$PWD/kubeconfig.yaml
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest' # Or a specific version like 'v3.12.0'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify Cluster Connection
+        id: verify_cluster
+        run: kubectl cluster-info;pwd;
+        env:
+          # This variable tells Helm/Kubectl where to look
+          KUBECONFIG: ./kubeconfig.yaml
+
+      - name: Create Dynamic Overrides
+        env:
+          # This variable tells Helm/Kubectl where to look
+          KUBECONFIG: ./kubeconfig.yaml
+        if: success() && steps.verify_cluster.outcome == 'success'
+        run: |
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo update
+          helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
+
+      
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: install duckdns webhook
+        env:
+          # This variable tells Helm/Kubectl where to look
+          KUBECONFIG: ./kubeconfig.yaml        
+        run: |
+          helm repo add ebrianne https://ebrianne.github.io/helm-charts
+          helm repo update
+          helm install cert-manager-webhook-duckdns ebrianne/cert-manager-webhook-duckdns \
+          --namespace cert-manager \
+          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
+          --set clusterIssuer.production.create=true \
+          --set clusterIssuer.email='abhisheksingh050593@gmail.com'
+          # Use the -f flag to point to the environment-specific values file
+          #helm upgrade install --dry-run --debug test .
+          #helm upgrade --install helm-app-${{ github.event.inputs.app-name }}-${{ github.event.inputs.environment }} ./app-deploy \
+          #  --namespace ${{ github.event.inputs.app-name }}-${{ github.event.inputs.environment }} \
+          #  --create-namespace \
+          #  -f ./Environments/values-prod.yaml 
+            
