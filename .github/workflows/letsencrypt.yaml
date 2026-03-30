@@ -52,17 +52,10 @@ jobs:
           # This variable tells Helm/Kubectl where to look
           KUBECONFIG: ./kubeconfig.yaml        
         run: |
-          helm repo add ebrianne https://ebrianne.github.io/helm-charts
+          helm repo add csp33 https://csp33.github.io/cert-manager-duckdns-webhook
           helm repo update
-          helm install cert-manager-webhook-duckdns ebrianne/cert-manager-webhook-duckdns \
-          --namespace cert-manager \
-          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
-          --set clusterIssuer.production.create=true \
-          --set clusterIssuer.email='abhisheksingh050593@gmail.com'
-          # Use the -f flag to point to the environment-specific values file
-          #helm upgrade install --dry-run --debug test .
-          #helm upgrade --install helm-app-${{ github.event.inputs.app-name }}-${{ github.event.inputs.environment }} ./app-deploy \
-          #  --namespace ${{ github.event.inputs.app-name }}-${{ github.event.inputs.environment }} \
-          #  --create-namespace \
-          #  -f ./Environments/values-prod.yaml 
-            
+          helm repo update
+          helm install cert-manager-duckdns-webhook csp33/cert-manager-duckdns-webhook `
+          --namespace cert-manager `
+          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' `
+          --set clusterIssuer.email='abhisheksingh050593@gmail.com' `  
