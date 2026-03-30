@@ -36,7 +36,7 @@ jobs:
           # This variable tells Helm/Kubectl where to look
           KUBECONFIG: ./kubeconfig.yaml
 
-      - name: Create Dynamic Overrides
+      - name: install certmanager
         env:
           # This variable tells Helm/Kubectl where to look
           KUBECONFIG: ./kubeconfig.yaml
@@ -44,7 +44,7 @@ jobs:
         run: |
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
-          helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
+          helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
 
 
       - name: install duckdns webhook
