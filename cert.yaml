@@ -4,7 +4,7 @@ metadata:
   name: test-duckdns
   namespace: cert-manager
 spec:
-  secretName: test-duckdns-tls
+  secretName: test-duckdns
   dnsNames:
   - "*.abhi-ckad.duckdns.org"
   issuerRef:
