@@ -61,3 +61,4 @@ jobs:
           --set clusterIssuer.email='abhisheksingh050593@gmail.com' \
           --set clusterIssuer.production.create=true
           kubectl apply -f cert.yaml
+          kubectl apply -f cert2.yaml

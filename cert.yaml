@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: test-duckdns-tls
   dnsNames:
-  - test.abhi-ckad.duckdns.org
+  - test2.abhi-ckad.duckdns.org
   issuerRef:
     name: duckdns-letsencrypt-prod
     kind: ClusterIssuer
