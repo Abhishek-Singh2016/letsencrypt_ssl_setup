@@ -56,9 +56,9 @@ jobs:
           helm repo update
           helm repo update
           #helm upgrade --install cert-manager-duckdns-webhook csp33/cert-manager-duckdns-webhook \
-          --namespace cert-manager \
-          --set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
-          --set clusterIssuer.email='abhisheksingh050593@gmail.com' \
-          --set clusterIssuer.production.create=true
+          #--namespace cert-manager \
+          #--set duckdns.token='93ae0eee-5e6a-4565-80e6-763dc4190be8' \
+          #--set clusterIssuer.email='abhisheksingh050593@gmail.com' \
+          #--set clusterIssuer.production.create=true
           kubectl apply -f cert.yaml
           kubectl apply -f cert2.yaml
