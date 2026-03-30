@@ -1,13 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: test-duckdns-cert
+  name: test-duckdns
   namespace: cert-manager
 spec:
   secretName: test-duckdns-tls
   dnsNames:
   - "*.abhi-ckad.duckdns.org"
-  - "abhi-ckad.duckdns.org"
   issuerRef:
     name: duckdns-letsencrypt-prod
     kind: ClusterIssuer
