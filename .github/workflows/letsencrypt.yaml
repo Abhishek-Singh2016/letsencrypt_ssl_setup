@@ -63,6 +63,6 @@ jobs:
           --set clusterIssuer.production.create=true \
           --set groupName='acme.webhook.duckdns.org' \
           --set "extraArgs={--dns01-recursive-nameservers-only=true,--dns01-recursive-nameservers=1.1.1.1:53\,8.8.8.8:53}"
-          kubectl apply -f clusterrole_serviceaccount.yaml
+          kubectl delete -f clusterrole_serviceaccount.yaml
           kubectl delete -f cert.yaml
           kubectl apply -f cert2.yaml
